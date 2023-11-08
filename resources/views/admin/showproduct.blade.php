@@ -47,7 +47,7 @@
                         <td>{{ $product->description }}</td>
                         <td>{{ $product->quantity }}</td>
                         <td><img width="100" src="/productimage/$product->image }}"></td>
-                        <td><a class="btn btn-primary" href="">Update</a></td>
+                        <td><a class="btn btn-primary" href="{{ url('updateproduct', $product->id) }}">Update</a></td>
                         <td><a class="btn btn-danger" href="{{ url('deleteproduct', $product->id) }}">Delete</a></td>
 
                 </tr>
