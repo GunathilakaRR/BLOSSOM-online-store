@@ -122,6 +122,8 @@
                             <a class="nav-link" href="#footer">CONTACT</a>
                         </li>
 
+
+
                         {{-- <li class="nav-item">
 
                         @if (Route::has('login'))
@@ -146,19 +148,43 @@
 
                         @endif
                     </li> --}}
-                    @if (Route::has('login'))
-                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                    @auth
-                        <a href="{{ url('/dashboard') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                    @else
-                        <a href="{{ route('login') }}" class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log in</a>
 
-                        @if (Route::has('register'))
-                            <a href="{{ route('register') }}" class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                        <li class="nav-item">
+
+                            @if (Auth::check())
+                        <form id="logout-form" action="{{ url('logout') }}" method="POST">
+                            {{ csrf_field() }}
+                            <button type="submit">Logout</button>
+                        </form>
+                    @else
+                        <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">
+                                LOGIN
+                            </a>
+                        </li>
+                        <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">
+                            REGISTER
+                        </a>
+                    </li>
                         @endif
-                    @endauth
-                </div>
-            @endif
+
+                        {{-- @if (Route::has('login'))
+                                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
+                                    @auth
+                                        <a href="{{ url('/dashboard') }}"
+                                            class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
+                                    @else
+                                        <a href="{{ route('login') }}"
+                                            class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
+                                            in</a>
+
+                                        @if (Route::has('register'))
+                                            <a href="{{ route('register') }}"
+                                                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
+                                        @endif
+                                    @endauth
+                                </div>
+                            @endif --}}
+                        </li>
 
                     </ul>
                 </div>

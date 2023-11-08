@@ -1,10 +1,32 @@
-<section id="features">
 
+
+
+
+{{-- search bar --}}
+
+{{-- <form action="{{ url('search') }}" method="get">
+<div class="input-group">
+    <div class="form-outline">
+      <input type="search" name="search" class="form-control" placeholder="search" />
+    </div>
+    <input type="submit" class="btn btn-primary">
+
+  </div>
+</form> --}}
+
+
+
+<section id="features">
     <div class="row">
+
         @foreach ($data as $product)
+
             <div class="feature-box col-lg-4">
-                <img src="/productimage/{{ $product->image }}" alt="" width="300px">
+
+                <img width="300" height="370" src="/productimage/{{ $product->image }}" alt="" width="300px">
                 <p>{{ $product->title }}</p>
+
+                {{-- <a class="btn btn-primary" href="">Add to cart</a> --}}
 
     </div>
     @endforeach
@@ -12,9 +34,12 @@
 
 </section>
 
+@if (method_exists($data, 'link'))
 <div class="d-flex justify-content-center">
-{!! $data->links() !!}
-</div>
+    {!! $data->links() !!}
+    </div>
+@endif
+
 
 
 {{-- <div class="feature-box col-lg-4">
