@@ -92,5 +92,15 @@
             <span class="menu-title">Add Item</span>
           </a>
         </li>
+
+        <li class="nav-item menu-items">
+            <a class="nav-link" href="{{ url('showproduct') }}">
+                <i class="mdi mdi-file-document-box"></i>
+              </span>
+              <span class="menu-title">Show All Products</span>
+            </a>
+          </li>
+
+
       </ul>
     </nav>

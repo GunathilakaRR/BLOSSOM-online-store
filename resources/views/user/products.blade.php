@@ -1,11 +1,23 @@
 <section id="features">
-    <div class="row">
-        <div class="feature-box col-lg-4">
-            <img src="./images/item1.jpg" alt="" width="300px">
-            <p>CASUAL WEAR</p>
-        </div>
 
-        <div class="feature-box col-lg-4">
+    <div class="row">
+        @foreach ($data as $product)
+            <div class="feature-box col-lg-4">
+                <img src="/productimage/{{ $product->image }}" alt="" width="300px">
+                <p>{{ $product->title }}</p>
+
+    </div>
+    @endforeach
+    </div>
+
+</section>
+
+<div class="d-flex justify-content-center">
+{!! $data->links() !!}
+</div>
+
+
+{{-- <div class="feature-box col-lg-4">
             <img src="./images/item2.jpg" alt="" width="300px">
             <p>OFFICE WEAR</p>
         </div>
@@ -28,6 +40,4 @@
         <div class="feature-box col-lg-4">
             <img src="./images/item6.jpg" alt="" width="300px">
             <p>CASUAL WEAR</p>
-        </div>
-    </div>
-</section>
+        </div> --}}
