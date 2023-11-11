@@ -25,6 +25,7 @@
                     <tr>
 
                       <th> Product name </th>
+                      <th> Product Category</th>
                       <th> Product description </th>
                       <th> Product price </th>
                       <th> Product quantity </th>
@@ -39,6 +40,13 @@
                 @foreach ($data as $product)
                     <tr>
                       <td> {{ $product->title }} </td>
+                      <td>
+                        @if ($product->category)
+                            {{ $product->category->category_name }}
+                        @else
+                            No Category
+                        @endif
+                    </td>
                       <td> {{ $product->description }} </td>
                       <td> {{ $product->price }} </td>
                       <td>
@@ -64,5 +72,7 @@
     </div>
 </div>
 
-  
+
+
+
 

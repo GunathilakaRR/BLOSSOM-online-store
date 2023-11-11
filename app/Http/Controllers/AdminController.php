@@ -4,36 +4,88 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Product;
+use App\Models\Category;
 
 class AdminController extends Controller
 {
     public function product(){
-        return view('admin.product');
+        $categories = Category::all();
+        return view('admin.product', compact('categories'));
     }
 
-    public function uploadproduct(Request $request){
-        $data = new product;
+///////////////////////////////////////////////////////////////////////////////
 
-        $image = $request->file;
-        $imagename = time(). '.' . $image->getClientOriginalExtension();
-        $request->file->move('productimage', $imagename);
-        $data->image=$imagename;
 
+    public function uploadproduct(Request $request)
+    {
+        // Validate the request data before proceeding
+        $request->validate([
+            'categoryId' => 'required|exists:categories,id',
+            'title' => 'required|string',
+            'price' => 'required|numeric',
+            'desc' => 'nullable|string',
+            'quantity' => 'nullable|integer',
+            'file' => 'required|image|mimes:jpeg,png,jpg,gif,svg|max:2048',
+        ]);
+
+        // Create a new product instance
+        $data = new Product;
+
+        // Find the category by its ID
+        $category = Category::findOrFail($request->categoryId);
+
+        // Handle file upload (image)
+        $image = $request->file('file');
+        $imagename = time() . '.' . $image->getClientOriginalExtension();
+        $image->move('productimage', $imagename);
+
+        // Fill the product information
+        $data->image = $imagename;
         $data->title = $request->title;
         $data->price = $request->price;
         $data->description = $request->desc;
         $data->quantity = $request->quantity;
 
-        $data->save();
+        // Save the product to the database
+        $category->products()->save($data);
 
         return redirect()->back()->with('message', 'Product added successfully');
     }
+
+    ////////////////////////////////////////////////////////////////////////////////////////
+
+    // public function uploadproduct(Request $request){
+    //     $data = new product;
+
+    //     $category = Category::findOrFail($request->categoryId);
+    //     $category->products()->create([
+    //         // 'name'=> $request->categoryId,
+
+    //         $image = $request->file,
+    //         $imagename = time(). '.' . $image->getClientOriginalExtension(),
+    //         $request->file->move('productimage', $imagename),
+    //         $data->image=$imagename,
+
+    //         $data->title = $request->title,
+    //         $data->price = $request->price,
+    //         $data->description = $request->desc,
+    //         $data->quantity = $request->quantity,
+    //     ]);
+
+
+
+
+    //     $data->save();
+
+    //     return redirect()->back()->with('message', 'Product added successfully');
+    // }
 
 
 
     public function showproduct(){
         $data=product::all();
-        return view('admin.showproduct', compact('data'));
+        $categories = Category::all();
+        return view('admin.showproduct', compact('data', 'categories'));
     }
 
 
@@ -45,6 +97,7 @@ class AdminController extends Controller
 
 
     public function updateproduct($id){
+
         $data=product::find($id);
 
         return view("admin.updateproduct", compact('data'));
