@@ -17,7 +17,7 @@
 
 
 <section id="features">
-    <div class="row">
+    <div class="row ">
 
         @foreach ($data as $product)
 
@@ -25,6 +25,7 @@
 
                 <img width="300" height="370" src="/productimage/{{ $product->image }}" alt="" width="300px">
                 <p>{{ $product->title }}</p>
+                <p>Rs.{{ $product->price }}/=</p>
 
                 {{-- <a class="btn btn-primary" href="">Add to cart</a> --}}
 

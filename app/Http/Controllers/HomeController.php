@@ -26,7 +26,9 @@ class HomeController extends Controller
     public function index(){
 
         if(Auth::id()){
-            return redirect('redirect');
+            $data=product::all();
+            return view('user.home', compact('data'));
+            // return redirect('redirect');
         }else{
 
             $data = product::paginate(6);

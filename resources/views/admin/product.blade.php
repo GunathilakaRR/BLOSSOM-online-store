@@ -12,15 +12,45 @@
     @include('admin.css')
 
     <style>
+        .page-body-wrapper {
+            background-color: #fc8f9f;
+        }
+
+        label.formlabel {
+            font-size: 20px;
+            margin: 10px 0px 10px 0px;
+            width: 250px;
+            float: left;
+            text-align: left;
+        }
+
         .title {
             color: white;
             padding-top: 25px;
         }
-
-        label {
-            display: inline-block;
-            width: 200px;
+        .form-control{
+            background-color: pink;
+            border: none;
+            color: black;
+            border-radius: 5px;
         }
+        .form-control:focus{
+            background-color: pink;
+            border: none;
+            color: black;
+            border-radius: 5px;
+        }
+        .btn{
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: pink;
+            color: black;
+        }
+
+
+
+
     </style>
 
 </head>
@@ -56,9 +86,9 @@
 
 
 
-            
 
-            <form action="{{ url('uploadproduct') }}" method="POST" enctype="multipart/form-data">
+
+            {{-- <form action="{{ url('uploadproduct') }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div style="padding: 20px">
@@ -100,6 +130,57 @@
                 </div>
 
 
+            </form> --}}
+
+
+
+
+
+
+            <form action="{{ url('uploadproduct') }}" method="POST" enctype="multipart/form-data">
+                @csrf
+
+                <div class="form-row">
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Select Product Category</label>
+                        <select name="categoryId" class="form-control">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}">{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Name</label>
+                        <input type="text" name="title" class="form-control" placeholder="Enter product name">
+                    </div>
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Price</label>
+                        <input type="text" name="price" class="form-control" placeholder="Enter product Price">
+                    </div>
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Description</label>
+                        <input type="text" name="desc" class="form-control"
+                            placeholder="Enter Product Description">
+                    </div>
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Quantity</label>
+                        <input type="text" name="quantity" class="form-control" placeholder="Enter Product Quantity">
+                    </div>
+
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Iamge</label>
+                        <input type="file" name="file" class="form-control" placeholder="Enter Product Iamge">
+                    </div>
+
+
+                    <button type="submit" class="btn ">Submit</button>
+
+                </div>
             </form>
 
 
