@@ -10,19 +10,58 @@
 
     <base href="/public">
 
-    {{-- css files --}}
+
     @include('admin.css')
 
     <style>
+        /* .title {
+            color: white;
+            padding-top: 25px;
+        }
+
+        label {
+            display: inline-block;
+            width: 200px;
+        } */
+
+        .page-body-wrapper {
+            background-color: #fc8f9f;
+        }
+
+        label.formlabel {
+            font-size: 20px;
+            margin: 10px 0px 10px 0px;
+            width: 250px;
+            float: left;
+            text-align: left;
+        }
+
         .title {
             color: white;
             padding-top: 25px;
         }
-        label{
-            display: inline-block;
-            width: 200px;
+        .form-control{
+            background-color: pink;
+            border: none;
+            color: black;
+            border-radius: 5px;
         }
+        .form-control:focus{
+            background-color: pink;
+            border: none;
+            color: black;
+            border-radius: 5px;
+        }
+        .btn{
+            border: 1px solid black;
+            padding: 10px;
+            margin-bottom: 20px;
+            background-color: pink;
+            color: black;
+        }
+
     </style>
+
 
 </head>
 
@@ -30,63 +69,67 @@
 
 
 
-    <!-- partial -->
 
-    {{-- sidebar panel --}}
     @include('admin.sidebar')
 
-    {{-- navigationbar --}}
+
     @include('admin.navbar')
 
 
     <div class="container-fluid page-body-wrapper">
         <div class="container" align="center">
-            <h1 class="title">Add Product</h1>
+            <h1 class="title">Update Product</h1>
 
             @if (session()->has('message'))
+                <div class="alert alert-success">
 
-            <div class="alert alert-success">
+                    <button type="button" class="close" data-dismiss='alert'>x</button>
+                    {{ session()->get('message') }}
 
-            <button type="button" class="close" data-dismiss='alert'>x</button>
-            {{ session()->get('message') }}
-
-        </div>
+                </div>
             @endif
 
             <form action="{{ url('modifyproduct', $data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
-                <div style="padding: 20px">
 
-                    <label>Product Title</label>
-                    <input type="text" name="title" value="{{ $data->title }}">
-                </div>
+                <div class="form-row">
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Title</label>
+                        <input type="text" name="title" class="form-control" value="{{ $data->title }}">
+                    </div>
 
-                <div style="padding: 20px">
+                    <div class="form-group col-7">
+                        <label class="formlabel">Category</label>
+                        <select name="categoryId" class="form-control">
+                            @foreach ($categories as $category)
+                                <option value="{{ $category->id }}" {{ $data->id == $category->id ? 'selected' : '' }}>{{ $category->category_name }}</option>
+                            @endforeach
+                        </select>
+                    </div>
 
-                    <label>Product Price</label>
-                    <input type="number" name="price" value="{{ $data->price }}">
-                </div>
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Price</label>
+                        <input type="number" name="price" class="form-control" value="{{ $data->price }}">
+                    </div>
 
-                <div style="padding: 20px">
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Description</label>
+                        <input type="text" name="desc" class="form-control" value="{{ $data->description }}">
+                    </div>
 
-                    <label>Product Description</label>
-                    <input type="text" name="desc" value="{{ $data->description }}">
-                </div>
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Quantity</label>
+                        <input type="text" name="quantity" class="form-control" value="{{ $data->quantity }}">
+                    </div>
 
-                <div style="padding: 20px">
+                    <div class="form-group col-7">
+                        <label class="formlabel">Product Iamge</label>
+                        <img width="100" src="/productimage/{{ $data->image }}">
+                    </div>
 
-                    <label>Product Quantity</label>
-                    <input type="text" name="quantity" value="{{ $data->quantity }}">
-                </div>
 
-                <div style="padding: 20px">
 
-                    <label>Product Iamge</label>
-                    <img width="100" src="/productimage/{{ $data->image }}" >
-                </div>
-
-                <div style="padding: 20px">
-                    <input type="submit" value="Update">
+                    <button type="submit" class="btn ">Update Product</button>
                 </div>
 
 
@@ -95,10 +138,10 @@
 
         </div>
     </div>
-    <!-- partial -->
 
 
-    <!-- partial -->
+
+
 
     @include('admin.script')
 

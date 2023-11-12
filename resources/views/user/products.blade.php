@@ -1,5 +1,9 @@
 
-
+<style>
+    .catType{
+        padding-left: 20px;
+    }
+</style>
 
 
 {{-- search bar --}}
@@ -25,7 +29,8 @@
 
                 <img width="300" height="370" src="/productimage/{{ $product->image }}" alt="" width="300px">
                 <p>{{ $product->title }}</p>
-                <p>Rs.{{ $product->price }}/=</p>
+                <p>Rs.{{ $product->price }}/= <span class="catType"> {{ $product->category->category_name }}</span></p>
+
 
                 {{-- <a class="btn btn-primary" href="">Add to cart</a> --}}
 
@@ -41,29 +46,3 @@
     </div>
 @endif
 
-
-
-{{-- <div class="feature-box col-lg-4">
-            <img src="./images/item2.jpg" alt="" width="300px">
-            <p>OFFICE WEAR</p>
-        </div>
-
-        <div class="feature-box col-lg-4">
-            <img src="./images/item3.jpg" alt="" width="300px">
-            <p>MINI WEAR</p>
-        </div>
-
-        <div class="feature-box col-lg-4">
-            <img src="./images/item4.jpg" alt="" width="300px">
-            <p> OFFICE WEAR</p>
-        </div>
-
-        <div class="feature-box col-lg-4">
-            <img src="./images/item5.jpg" alt="" width="300px">
-            <p>PARTY WEAR</p>
-        </div>
-
-        <div class="feature-box col-lg-4">
-            <img src="./images/item6.jpg" alt="" width="300px">
-            <p>CASUAL WEAR</p>
-        </div> --}}

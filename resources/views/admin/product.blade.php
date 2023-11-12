@@ -163,8 +163,7 @@
 
                     <div class="form-group col-7">
                         <label class="formlabel">Product Description</label>
-                        <input type="text" name="desc" class="form-control"
-                            placeholder="Enter Product Description">
+                        <input type="text" name="desc" class="form-control" placeholder="Enter Product Description">
                     </div>
 
                     <div class="form-group col-7">
@@ -178,7 +177,7 @@
                     </div>
 
 
-                    <button type="submit" class="btn ">Submit</button>
+                    <button type="submit" class="btn ">Add Product</button>
 
                 </div>
             </form>

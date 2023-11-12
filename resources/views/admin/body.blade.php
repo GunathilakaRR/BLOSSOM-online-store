@@ -55,7 +55,7 @@
                         @elseif (  $product->quantity > 10)
                             <span class="badge bg-success">{{ $product->quantity }}</span>
                         @else
-                            <span class="badge bg-primary">{{ $product->quantity }}</span>
+                            <span class="badge bg-warning">{{ $product->quantity }}</span>
                         @endif
                     </td>
                       <td> <img class="table-img"  src={{ ("productimage/".$product->image) }}> </td>

@@ -36,68 +36,7 @@
     <section id="header">
         <div class="container-fluid">
 
-            <!-- navbar -->
 
-            {{-- <header class="">
-                <nav class="navbar navbar-expand-lg">
-                    <div class="container">
-                        <a class="navbar-brand" href="index.html">
-                            <h2>Sixteen <em>Clothing</em></h2>
-                        </a>
-                        <button class="navbar-toggler" type="button" data-toggle="collapse"
-                            data-target="#navbarResponsive" aria-controls="navbarResponsive" aria-expanded="false"
-                            aria-label="Toggle navigation">
-                            <span class="navbar-toggler-icon"></span>
-                        </button>
-                        <div class="collapse navbar-collapse" id="navbarResponsive">
-                            <ul class="navbar-nav ml-auto">
-                                <li class="nav-item active">
-                                    <a class="nav-link" href="index.html">Home
-                                        <span class="sr-only">(current)</span>
-                                    </a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="products.html">Our Products</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="about.html">About Us</a>
-                                </li>
-                                <li class="nav-item">
-                                    <a class="nav-link" href="contact.html">Contact Us</a>
-                                </li>
-
-                                <li class="nav-item">
-
-                                    @if (Route::has('login'))
-
-                                            @auth
-
-                                                        <x-app-layout>
-
-                                                        </x-app-layout>
-
-
-                                            @else
-                                                <li><a class="nav-link" href="{{ route('login') }}"
-                                                        >LOGIN</a></li>
-
-                                                @if (Route::has('register'))
-                                                    <li><a class="nav-link" href="{{ route('register') }}"
-                                                            >REGISTER</a>
-                                                    </li>
-                                                @endif
-                                            @endauth
-
-                                    @endif
-                                </li>
-
-
-
-                            </ul>
-                        </div>
-                    </div>
-                </nav>
-            </header> --}}
 
             <nav class="navbar navbar-expand-lg  ">
                 <a class="navbar-brand" href="#">BLOSSOM</a>
@@ -123,67 +62,25 @@
                         </li>
 
 
-
-                        {{-- <li class="nav-item">
-
-                        @if (Route::has('login'))
-
-                                @auth
-                                    <li><a class="nav-link">
-                                            <x-app-layout>
-
-                                            </x-app-layout>
-                                            </a>
-                                    </li>
-                                @else
-                                    <li><a class="nav-link" href="{{ route('login') }}"
-                                            >LOGIN</a></li>
-
-                                    @if (Route::has('register'))
-                                        <li><a class="nav-link" href="{{ route('register') }}"
-                                                >REGISTER</a>
-                                        </li>
-                                    @endif
-                                @endauth
-
-                        @endif
-                    </li> --}}
-
                         <li class="nav-item">
 
                             @if (Auth::check())
-                        <form id="logout-form" action="{{ url('logout') }}" method="POST">
-                            {{ csrf_field() }}
-                            <button type="submit">Logout</button>
-                        </form>
-                    @else
+                                <form id="logout-form" action="{{ url('logout') }}" method="POST">
+                                    {{ csrf_field() }}
+                                    <button type="submit">Logout</button>
+                                </form>
+                            @else
                         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">
                                 LOGIN
                             </a>
                         </li>
                         <li class="nav-item"><a class="nav-link" href="{{ route('register') }}">
-                            REGISTER
-                        </a>
-                    </li>
+                                REGISTER
+                            </a>
+                        </li>
                         @endif
 
-                        {{-- @if (Route::has('login'))
-                                <div class="sm:fixed sm:top-0 sm:right-0 p-6 text-right z-10">
-                                    @auth
-                                        <a href="{{ url('/dashboard') }}"
-                                            class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Dashboard</a>
-                                    @else
-                                        <a href="{{ route('login') }}"
-                                            class="font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Log
-                                            in</a>
 
-                                        @if (Route::has('register'))
-                                            <a href="{{ route('register') }}"
-                                                class="ml-4 font-semibold text-gray-600 hover:text-gray-900 focus:outline focus:outline-2 focus:rounded-sm focus:outline-red-500">Register</a>
-                                        @endif
-                                    @endauth
-                                </div>
-                            @endif --}}
                         </li>
 
                     </ul>
@@ -232,11 +129,11 @@
 
 
     <!-- press -->
-    <!-- <section id="press">
+    <section id="press">
+    
     <img src="./images/brandix.png" alt="" width="200px">
     <img src="./images/brandix.png" alt="" width="200px">
-    <img src="./images/brandix.png" alt="" width="200px">
-  </section> -->
+  </section>
 
 
 

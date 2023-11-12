@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use App\Models\User;
 use App\Models\Product;
+use App\Models\Category;
 
 class HomeController extends Controller
 {
@@ -17,7 +18,7 @@ class HomeController extends Controller
             $data=product::all();
             return view('admin.dashboard', compact('data'));
         }else{
-            $data = product::paginate(6);
+            $data = product::all();
             return view('user.home', compact('data'));
         }
     }
@@ -27,7 +28,8 @@ class HomeController extends Controller
 
         if(Auth::id()){
             $data=product::all();
-            return view('user.home', compact('data'));
+            $categories = Category::all();
+            return view('user.home', compact('data', 'categories'));
             // return redirect('redirect');
         }else{
 

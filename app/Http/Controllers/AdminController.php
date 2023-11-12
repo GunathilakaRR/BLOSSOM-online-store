@@ -13,8 +13,6 @@ class AdminController extends Controller
         return view('admin.product', compact('categories'));
     }
 
-///////////////////////////////////////////////////////////////////////////////
-
 
     public function uploadproduct(Request $request)
     {
@@ -52,35 +50,6 @@ class AdminController extends Controller
         return redirect()->back()->with('message', 'Product added successfully');
     }
 
-    ////////////////////////////////////////////////////////////////////////////////////////
-
-    // public function uploadproduct(Request $request){
-    //     $data = new product;
-
-    //     $category = Category::findOrFail($request->categoryId);
-    //     $category->products()->create([
-    //         // 'name'=> $request->categoryId,
-
-    //         $image = $request->file,
-    //         $imagename = time(). '.' . $image->getClientOriginalExtension(),
-    //         $request->file->move('productimage', $imagename),
-    //         $data->image=$imagename,
-
-    //         $data->title = $request->title,
-    //         $data->price = $request->price,
-    //         $data->description = $request->desc,
-    //         $data->quantity = $request->quantity,
-    //     ]);
-
-
-
-
-    //     $data->save();
-
-    //     return redirect()->back()->with('message', 'Product added successfully');
-    // }
-
-
 
     public function showproduct(){
         $data=product::all();
@@ -95,17 +64,25 @@ class AdminController extends Controller
         return redirect()->back();
     }
 
+    public function deletecategory($id){
+        $categories=Category::find($id);
+        Product::where('category_id', $id)->delete();
+        // $categories->delete();
+        return redirect()->back();
+    }
+
 
     public function updateproduct($id){
-
+        $categories = Category::all();
         $data=product::find($id);
 
-        return view("admin.updateproduct", compact('data'));
+        return view("admin.updateproduct", compact('data', 'categories'));
     }
 
 
     public function modifyproduct(Request $request, $id){
         $data = product::find($id);
+        $categories = Category::all();
 
         $image = $request->file;
 
@@ -114,6 +91,7 @@ class AdminController extends Controller
         $request->file->move('productimage', $imagename);
         $data->image=$imagename;
         }
+
 
         $data->title = $request->title;
         $data->price = $request->price;
