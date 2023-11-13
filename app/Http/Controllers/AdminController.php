@@ -76,13 +76,14 @@ class AdminController extends Controller
         $categories = Category::all();
         $data=product::find($id);
 
+
+
         return view("admin.updateproduct", compact('data', 'categories'));
     }
 
 
     public function modifyproduct(Request $request, $id){
-        $data = product::find($id);
-        $categories = Category::all();
+        $data = product::find($id); 
 
         $image = $request->file;
 
@@ -94,6 +95,7 @@ class AdminController extends Controller
 
 
         $data->title = $request->title;
+        $data->category_id = $request->categoryId;
         $data->price = $request->price;
         $data->description = $request->desc;
         $data->quantity = $request->quantity;

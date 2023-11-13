@@ -89,7 +89,7 @@
                 </div>
             @endif
 
-            <form action="{{ url('modifyproduct', $data->id) }}" method="POST" enctype="multipart/form-data">
+            <form action="{{ url('modifyproduct',  $data->id) }}" method="POST" enctype="multipart/form-data">
                 @csrf
 
                 <div class="form-row">
@@ -102,7 +102,10 @@
                         <label class="formlabel">Category</label>
                         <select name="categoryId" class="form-control">
                             @foreach ($categories as $category)
-                                <option value="{{ $category->id }}" {{ $data->id == $category->id ? 'selected' : '' }}>{{ $category->category_name }}</option>
+                            <option value="{{ $category->id }}" {{ $data->category_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->category_name }}
+                            </option>
+                                {{-- <option value="{{ $category->id }}" >{{ $category->category_name }}</option> --}}
                             @endforeach
                         </select>
                     </div>
