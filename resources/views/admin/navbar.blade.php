@@ -7,7 +7,7 @@
         <button class="navbar-toggler navbar-toggler align-self-center" type="button" data-toggle="minimize">
             <span class="mdi mdi-menu"></span>
         </button>
-        
+
         <ul class="navbar-nav navbar-nav-right">
 
 
@@ -20,7 +20,7 @@
             <li class="nav-item dropdown">
                 <a class="nav-link" id="profileDropdown" href="#" data-bs-toggle="dropdown">
                     <div class="navbar-profile">
-                        <p class="mb-0 d-none d-sm-block navbar-profile-name">Henry Klein</p>
+                        <p class="mb-0 d-none d-sm-block navbar-profile-name">{{Auth::user()->name  }}</p>
                         <i class="mdi mdi-menu-down d-none d-sm-block"></i>
                     </div>
                 </a>

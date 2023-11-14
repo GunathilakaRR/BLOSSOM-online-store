@@ -65,9 +65,14 @@
                         <li class="nav-item">
 
                             @if (Auth::check())
+                            <li class="nav-item">
+                                <a class="nav-link" href="{{ url('showcart') }}">CART</a>
+                            </li>
+
                                 <form id="logout-form" action="{{ url('logout') }}" method="POST">
                                     {{ csrf_field() }}
-                                    <button type="submit">Logout</button>
+                                    <button class="btnlg" type="submit">LOGOUT</button>
+
                                 </form>
                             @else
                         <li class="nav-item"><a class="nav-link" href="{{ route('login') }}">
@@ -106,6 +111,7 @@
     </section>
 
 
+
     <!-- feature -->
     @include('user.products')
 
@@ -130,10 +136,10 @@
 
     <!-- press -->
     <section id="press">
-    
-    <img src="./images/brandix.png" alt="" width="200px">
-    <img src="./images/brandix.png" alt="" width="200px">
-  </section>
+
+        <img src="./images/brandix.png" alt="" width="200px">
+        <img src="./images/brandix.png" alt="" width="200px">
+    </section>
 
 
 

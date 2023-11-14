@@ -15,13 +15,21 @@ body{
     color: white;
     margin: 0 10px;
 }
+.btnlg{
+    color: white;
+    margin: 0 10px;
+    color: white;
+    background-color: #fc8f9f;
+    border: none;
+    padding-top: 7px;
+}
 
 
 
 /*--------------------------------------- Header -------------------------------------*/
 #header{
     background-color: #fc8f9f;
-    /* #ff9eac */
+
 }
 
 .row slogan{
