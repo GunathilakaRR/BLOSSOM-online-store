@@ -76,7 +76,7 @@ public function showcart(){
 
     $user = auth()->user();
     $cart = cart::where('phone', $user->phone)->get();
-    return view('user.showcart', compact('cart'));
+    return view('user.showcart', compact('cart', 'user'));
 }
 
 
