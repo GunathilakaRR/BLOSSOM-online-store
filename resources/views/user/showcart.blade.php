@@ -94,11 +94,84 @@
 </nav>
 
 
+
 <div class="container">
     <div class="row">
         <div class="col-lg-7 col-md-12">
 
-            <form class="cart-col1" action="">
+            <form class="cart-col1" action="{{ route('stripe') }}" method="POST">
+                @csrf
+                <table>
+                    <thead>
+                        <tr>
+                            <th class="col-gap">Product</th>
+                            <th class="col-gap">Category</th>
+                            <th class="col-gap">Quantity</th>
+                            <th class="col-gap">Price</th>
+                            <th class="col-gap">Total</th>
+                            <th class="col-gap">Action</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach ($cart as $item)
+                            <tr>
+                                <td class="col-gap">{{ $item->product_title }}</td>
+                                <td class="col-gap">{{ $item->product_category }}</td>
+                                <td class="col-gap">
+                                    <input style="width: 40px" type="number" name="quantity" class="quantityInput"
+                                        min="1" value="1" data-item-id="{{ $item->id }}"
+                                        oninput="calculateTotal()">
+                                </td>
+                                <td class="price col-gap">{{ $item->price }}</td>
+                                <td class="total col-gap">{{ $item->price }}</td>
+                                <td class="col-gap"><a class="btn btn-danger"
+                                        href="{{ url('deleteAddToCart', $item->id) }}"><i
+                                            class="fa-solid fa-trash"></i></a></td>
+                            </tr>
+                        @endforeach
+                    </tbody>
+                </table>
+
+                <input type="hidden" name="grandTotal" id="hiddenGrandTotal" value="0.00">
+
+                <p id="displayGrandTotal">Grand Total: 0.00</p>
+                <button type="submit" class="btn btn-success">Confirm Order</button>
+
+                <script>
+                    function calculateTotal() {
+                        var grandTotal = 0;
+                        // Loop through each product row
+                        var rows = document.querySelectorAll('tbody tr');
+                        rows.forEach(function(row) {
+                            var quantityInput = row.querySelector('.quantityInput');
+                            var priceElement = row.querySelector('.price');
+                            var totalElement = row.querySelector('.total');
+                            var quantity = parseInt(quantityInput.value);
+                            var price = parseFloat(priceElement.textContent);
+                            var total = quantity * price;
+                            totalElement.textContent = total.toFixed(2);
+                            // Update the grand total
+                            grandTotal += total;
+                        });
+
+                        // Update the hidden input with the grand total
+                        document.getElementById('hiddenGrandTotal').value = grandTotal.toFixed(2);
+
+                        // Display the grand total
+                        document.getElementById('displayGrandTotal').textContent = 'Grand Total: ' + grandTotal.toFixed(2);
+                    }
+
+                    // Set default total values
+                    document.addEventListener('DOMContentLoaded', function() {
+                        calculateTotal(); // Calculate total initially
+                    });
+                </script>
+            </form>
+
+
+
+            {{-- <form class="cart-col1" action="{{ route('stripe') }}" method="POST">
+                @csrf
                 <table>
                     <thead>
                         <tr>
@@ -131,39 +204,34 @@
                 </table>
 
                 <p id="grandTotal">Grand Total: 0.00</p>
-                <button class="btn btn-success">Confirm Order</button>
-
+                <button type="submit" class="btn btn-success">Confirm Order</button>
 
                 <script>
                     function calculateTotal() {
                         var grandTotal = 0;
-
                         // Loop through each product row
                         var rows = document.querySelectorAll('tbody tr');
                         rows.forEach(function(row) {
                             var quantityInput = row.querySelector('.quantityInput');
                             var priceElement = row.querySelector('.price');
                             var totalElement = row.querySelector('.total');
-
                             var quantity = parseInt(quantityInput.value);
                             var price = parseFloat(priceElement.textContent);
-
                             var total = quantity * price;
                             totalElement.textContent = total.toFixed(2);
-
                             // Update the grand total
                             grandTotal += total;
                         });
-
                         // Display the grand total
                         document.getElementById('grandTotal').textContent = 'Grand Total: ' + grandTotal.toFixed(2);
                     }
-
                     // Set default total values
                     document.addEventListener('DOMContentLoaded', function() {
                         calculateTotal(); // Calculate total initially
                     });
                 </script>
+
+            </form> --}}
         </div>
 
         <div class="col-lg-5 col-md-12 cart-col2">
@@ -180,29 +248,31 @@
                 Phone no : {{ $user->phone }}
             </p>
             <p>
-                <input type="radio" data-bs-toggle="modal" data-bs-target="#exampleModal" name="payment-way"> <i class="fa-solid fa-credit-card"></i>
+                <input type="radio" data-bs-toggle="modal" data-bs-target="#exampleModal" name="payment-way"> <i
+                    class="fa-solid fa-credit-card"></i>
                 credit/debit card
             </p>
             {{-- modal --}}
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+                aria-hidden="true">
                 <div class="modal-dialog" role="document">
-                  <div class="modal-content">
-                    <div class="modal-header">
-                      <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                      <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">&times;</span>
-                      </button>
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            ...
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="button" class="btn btn-primary">Save changes</button>
+                        </div>
                     </div>
-                    <div class="modal-body">
-                      ...
-                    </div>
-                    <div class="modal-footer">
-                      <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                      <button type="button" class="btn btn-primary">Save changes</button>
-                    </div>
-                  </div>
                 </div>
-              </div>
+            </div>
             <p>
                 <input type="radio" name="payment-way"> <i class="fa-solid fa-money-check-dollar"></i>
                 cash on delivery
@@ -210,8 +280,12 @@
             <p>
                 Order Summary :
             </p>
+
+
+            <button type="submit">Checkout</button>
+
         </div>
-        </form>
+
     </div>
 
 </div>
@@ -219,7 +293,9 @@
 
 
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"
+    integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
+</script>
 
 {{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
     integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">

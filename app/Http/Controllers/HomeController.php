@@ -88,4 +88,90 @@ public function deleteAddToCart($id){
 }
 
 
+public function payment(Request $request){
+
+    $total_price = $request->grandTotal;
+    // dd($request->grandTotal);
+
+    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+    $products = Cart::all();
+
+    $lineItems = [];
+
+    foreach($products as $product){
+
+        $lineItems [] = [
+            [
+                'price_data' => [
+                  'currency' => 'usd',
+                  'product_data' => [
+
+                    'name' => $product->product_title,
+                  ],
+                  'unit_amount' => $total_price*100,
+                ],
+                'quantity' => 1,
+            ]
+        ];
+    }
+
+    $checkout_session = $stripe->checkout->sessions->create([
+        'line_items' => $lineItems,
+        'mode' => 'payment',
+        'success_url' => 'http://localhost:4242/success',
+        'cancel_url' => 'http://localhost:4242/cancel',
+    ]);
+
+    return redirect($checkout_session->url);
 }
+
+public function success(){
+    return 'success';
+}
+
+public function cancel(){
+    return 'canceled';
+}
+}
+
+// public function payment(Request $request){
+
+//     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+
+//     $products = Cart::all();
+
+//     $lineItems = [];
+//     foreach($products as $product){
+//         $lineItems [] = [
+//             [
+//                 'price_data' => [
+//                   'currency' => 'usd',
+//                   'product_data' => [
+//                     'name' => $product->name,
+//                   ],
+//                   'unit_amount' => $product->price*100,
+//                 ],
+//                 'quantity' => 1,
+//               ]
+//         ];
+//     }
+
+//     $checkout_session = $stripe->checkout->sessions->create([
+//         'line_items' => $lineItems,
+//         'mode' => 'payment',
+//         'success_url' => 'http://localhost:4242/success',
+//         'cancel_url' => 'http://localhost:4242/cancel',
+//       ]);
+
+//       return redirect($session->url);
+//     }
+
+//     public function success(){
+//         return 'success';
+//     }
+
+//     public function cancel(){
+//         return 'canceled';
+//     }
+
+// }

@@ -3,6 +3,8 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\AdminController;
+use App\Http\Controllers\StripePaymentController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -55,4 +57,11 @@ Route::get('/showcart', [HomeController::class, 'showcart']);
 Route::get('/deleteAddToCart/{id}', [HomeController::class, 'deleteAddToCart']);
 
 Route::get('/search', [HomeController::class, 'search']);
+
+
+
+
+Route::post('stripe/payment', [HomeController::class, 'payment'])->name('stripe');
+Route::get('stripe/success', [StripePaymentController::class, 'success'])->name('stripe_success');
+Route::get('stripe/cancel', [StripePaymentController::class, 'cancel'])->name('stripe_cancel');
 
