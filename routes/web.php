@@ -61,7 +61,12 @@ Route::get('/search', [HomeController::class, 'search']);
 
 
 
-Route::post('stripe/payment', [HomeController::class, 'payment'])->name('stripe');
-Route::get('stripe/success', [StripePaymentController::class, 'success'])->name('stripe_success');
-Route::get('stripe/cancel', [StripePaymentController::class, 'cancel'])->name('stripe_cancel');
+// Route::post('stripe/payment', [HomeController::class, 'payment'])->name('stripe');
+// Route::get('stripe/success', [StripePaymentController::class, 'success'])->name('stripe_success');
+// Route::get('stripe/cancel', [StripePaymentController::class, 'cancel'])->name('stripe_cancel');
 
+
+// Route::post('cash-payment', [HomeController::class, 'payment'])->name('cash-payment');
+
+Route::post('/process-payment', [HomeController::class, 'processPayment'])->name('process.payment');
+Route::post('/cash-payment-interface', [HomeController::class, 'showCashPaymentInterface'])->name('cash-payment-interface');

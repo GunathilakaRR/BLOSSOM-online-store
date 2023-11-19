@@ -99,7 +99,7 @@
     <div class="row">
         <div class="col-lg-7 col-md-12">
 
-            <form class="cart-col1" action="{{ route('stripe') }}" method="POST">
+            <form class="cart-col1" action="{{ route('process.payment') }}" method="POST">
                 @csrf
                 <table>
                     <thead>
@@ -135,7 +135,7 @@
                 <input type="hidden" name="grandTotal" id="hiddenGrandTotal" value="0.00">
 
                 <p id="displayGrandTotal">Grand Total: 0.00</p>
-                <button type="submit" class="btn btn-success">Confirm Order</button>
+                {{-- <button type="submit" class="btn btn-success">Confirm Order</button> --}}
 
                 <script>
                     function calculateTotal() {
@@ -165,73 +165,16 @@
                     document.addEventListener('DOMContentLoaded', function() {
                         calculateTotal(); // Calculate total initially
                     });
-                </script>
-            </form>
 
-
-
-            {{-- <form class="cart-col1" action="{{ route('stripe') }}" method="POST">
-                @csrf
-                <table>
-                    <thead>
-                        <tr>
-                            <th class="col-gap">Product</th>
-                            <th class="col-gap">Category</th>
-                            <th class="col-gap">Quantity</th>
-                            <th class="col-gap">Price</th>
-                            <th class="col-gap">Total</th>
-                            <th class="col-gap">Action</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        @foreach ($cart as $item)
-                            <tr>
-                                <td class="col-gap">{{ $item->product_title }}</td>
-                                <td class="col-gap">{{ $item->product_category }}</td>
-                                <td class="col-gap">
-                                    <input style="width:40px" type="number" name="quantity" class="quantityInput"
-                                        min="1" value="1" data-item-id="{{ $item->id }}"
-                                        oninput="calculateTotal()">
-                                </td>
-                                <td class="price col-gap">{{ $item->price }}</td>
-                                <td class="total col-gap">{{ $item->price }}</td>
-                                <td class="col-gap"><a class="btn btn-danger"
-                                        href="{{ url('deleteAddToCart', $item->id) }}"><i
-                                            class="fa-solid fa-trash"></i></a></td>
-                            </tr>
-                        @endforeach
-                    </tbody>
-                </table>
-
-                <p id="grandTotal">Grand Total: 0.00</p>
-                <button type="submit" class="btn btn-success">Confirm Order</button>
-
-                <script>
-                    function calculateTotal() {
-                        var grandTotal = 0;
-                        // Loop through each product row
-                        var rows = document.querySelectorAll('tbody tr');
-                        rows.forEach(function(row) {
-                            var quantityInput = row.querySelector('.quantityInput');
-                            var priceElement = row.querySelector('.price');
-                            var totalElement = row.querySelector('.total');
-                            var quantity = parseInt(quantityInput.value);
-                            var price = parseFloat(priceElement.textContent);
-                            var total = quantity * price;
-                            totalElement.textContent = total.toFixed(2);
-                            // Update the grand total
-                            grandTotal += total;
+                    document.querySelectorAll('.payment-form').forEach(function(form) {
+                        form.addEventListener('submit', function(event) {
+                            var paymentMethod = event.submitter.getAttribute('value');
+                            document.getElementById('hiddenPaymentMethod').value = paymentMethod;
                         });
-                        // Display the grand total
-                        document.getElementById('grandTotal').textContent = 'Grand Total: ' + grandTotal.toFixed(2);
-                    }
-                    // Set default total values
-                    document.addEventListener('DOMContentLoaded', function() {
-                        calculateTotal(); // Calculate total initially
                     });
                 </script>
 
-            </form> --}}
+
         </div>
 
         <div class="col-lg-5 col-md-12 cart-col2">
@@ -248,43 +191,20 @@
                 Phone no : {{ $user->phone }}
             </p>
             <p>
-                <input type="radio" data-bs-toggle="modal" data-bs-target="#exampleModal" name="payment-way"> <i
-                    class="fa-solid fa-credit-card"></i>
-                credit/debit card
-            </p>
-            {{-- modal --}}
-            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
-                aria-hidden="true">
-                <div class="modal-dialog" role="document">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                        </div>
-                        <div class="modal-body">
-                            ...
-                        </div>
-                        <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="button" class="btn btn-primary">Save changes</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <p>
-                <input type="radio" name="payment-way"> <i class="fa-solid fa-money-check-dollar"></i>
-                cash on delivery
-            </p>
-            <p>
                 Order Summary :
             </p>
 
 
-            <button type="submit">Checkout</button>
+            <button type="submit" name="payment_method" value="card">Pay with card</button>
+            {{-- <button type="submit">Pay with card</button> --}}
 
         </div>
+
+        </form>
+
+        <form action="{{ route('cash-payment-interface') }}" method="POST">
+            <button type="submit" name="payment_method" value="cash">Pay with cash</button>
+        </form>
 
     </div>
 

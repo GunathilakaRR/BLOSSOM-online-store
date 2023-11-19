@@ -88,10 +88,18 @@ public function deleteAddToCart($id){
 }
 
 
-public function payment(Request $request){
 
-    $total_price = $request->grandTotal;
-    // dd($request->grandTotal);
+
+public function processPayment(Request $request)
+{
+    // Handle payment processing for both cash and card
+    $paymentMethod = $request->input('payment_method');
+
+    if ($paymentMethod === 'card') {
+        // Redirect to Stripe payment gateway with necessary information
+        // Implement your Stripe logic here
+
+        $total_price = $request->grandTotal;
 
     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
     $products = Cart::all();
@@ -125,34 +133,49 @@ public function payment(Request $request){
     return redirect($checkout_session->url);
 }
 
-public function success(){
-    return 'success';
+
+        // return redirect()->route('stripe.checkout');
+
+     elseif ($paymentMethod === 'cash') {
+        // Redirect to another interface for cash payment
+        return redirect()->route('cash.payment.interface');
+    }
 }
 
-public function cancel(){
-    return 'canceled';
+public function showCashPaymentInterface()
+{
+    // Logic for displaying the interface for cash payment
+    return redirect()->back();
 }
+
+
 }
+
 
 // public function payment(Request $request){
 
-//     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+//     $total_price = $request->grandTotal;
+//     // dd($request->grandTotal);
 
+//     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
 //     $products = Cart::all();
 
 //     $lineItems = [];
+
 //     foreach($products as $product){
+
 //         $lineItems [] = [
 //             [
 //                 'price_data' => [
 //                   'currency' => 'usd',
 //                   'product_data' => [
-//                     'name' => $product->name,
+
+//                     'name' => $product->product_title,
 //                   ],
-//                   'unit_amount' => $product->price*100,
+//                   'unit_amount' => $total_price*100,
 //                 ],
 //                 'quantity' => 1,
-//               ]
+//             ]
 //         ];
 //     }
 
@@ -161,17 +184,18 @@ public function cancel(){
 //         'mode' => 'payment',
 //         'success_url' => 'http://localhost:4242/success',
 //         'cancel_url' => 'http://localhost:4242/cancel',
-//       ]);
+//     ]);
 
-//       return redirect($session->url);
-//     }
-
-//     public function success(){
-//         return 'success';
-//     }
-
-//     public function cancel(){
-//         return 'canceled';
-//     }
-
+//     return redirect($checkout_session->url);
 // }
+
+// public function success(){
+//     return 'success';
+// }
+
+// public function cancel(){
+//     return 'canceled';
+// }
+// }
+
+
