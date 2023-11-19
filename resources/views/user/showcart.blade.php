@@ -115,18 +115,32 @@
                     <tbody>
                         @foreach ($cart as $item)
                             <tr>
-                                <td class="col-gap">{{ $item->product_title }}</td>
-                                <td class="col-gap">{{ $item->product_category }}</td>
+                                <td  class="col-gap"> <input type="text" name="product_title[]" value="{{ $item->product_title }}" hidden="">
+                                    {{ $item->product_title }}
+                                </td>
+
+                                <td class="col-gap"><input type="text" name="product_category[]" value="{{ $item->product_category }}" hidden="">
+                                    {{ $item->product_category }}
+                                </td>
+
                                 <td class="col-gap">
-                                    <input style="width: 40px" type="number" name="quantity" class="quantityInput"
+                                    <input style="width: 40px" type="number" name="quantity[]" class="quantityInput"
                                         min="1" value="1" data-item-id="{{ $item->id }}"
                                         oninput="calculateTotal()">
                                 </td>
-                                <td class="price col-gap">{{ $item->price }}</td>
-                                <td class="total col-gap">{{ $item->price }}</td>
+
+                                <td class="price col-gap"><input type="text" name="price[]" value="{{ $item->price }}" hidden="">
+                                    {{ $item->price }}
+                                </td>
+
+                                <td class="total col-gap">
+                                    {{ $item->price }}
+                                </td>
+
                                 <td class="col-gap"><a class="btn btn-danger"
                                         href="{{ url('deleteAddToCart', $item->id) }}"><i
-                                            class="fa-solid fa-trash"></i></a></td>
+                                            class="fa-solid fa-trash"></i></a>
+                                </td>
                             </tr>
                         @endforeach
                     </tbody>
@@ -203,6 +217,7 @@
         </form>
 
         <form action="{{ route('cash-payment-interface') }}" method="POST">
+            @csrf
             <button type="submit" name="payment_method" value="cash">Pay with cash</button>
         </form>
 

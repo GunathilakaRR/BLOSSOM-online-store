@@ -8,6 +8,7 @@ use App\Models\User;
 use App\Models\Product;
 use App\Models\Category;
 use App\Models\Cart;
+use App\Models\Order;
 
 class HomeController extends Controller
 {
@@ -92,6 +93,30 @@ public function deleteAddToCart($id){
 
 public function processPayment(Request $request)
 {
+    $user=auth()->user();
+
+    $name = $user->name;
+    $phone = $user->phone;
+    $address = $user->address;
+    $email= $user->email;
+
+    if (!is_null($request->product_title)) {
+    foreach($request->product_title as $key=>$productname){
+        $order = new order;
+
+        $order->product = $request->product_title[$key];
+        $order->price = $request->price[$key];
+        $order->quantity = $request->quantity[$key];
+        $order->CusName = $name;
+        $order->CusAddress= $address;
+        $order->Cusphone = $phone;
+        $order->CusEmail = $email;
+        $order->status = 'ok';
+
+        $order->save();
+    }}
+    // dd($request);
+
     // Handle payment processing for both cash and card
     $paymentMethod = $request->input('payment_method');
 
@@ -138,14 +163,39 @@ public function processPayment(Request $request)
 
      elseif ($paymentMethod === 'cash') {
         // Redirect to another interface for cash payment
-        return redirect()->route('cash.payment.interface');
+        return redirect()->route('cash-payment-interface');
     }
 }
 
-public function showCashPaymentInterface()
+
+
+
+public function showCashPaymentInterface(Request $request)
 {
+    $user=auth()->user();
+
+    $name = $user->name;
+    $phone = $user->phone;
+    $address = $user->address;
+    $email= $user->email;
+
+    if (!is_null($request->product_title)) {
+    foreach($request->product_title as $key=>$productname){
+        $order = new order;
+
+        $order->product = $request->product_title[$key];
+        $order->price = $request->price[$key];
+        $order->quantity = $request->quantity[$key];
+        $order->CusName = $name;
+        $order->CusAddress= $address;
+        $order->Cusphone = $phone;
+        $order->CusEmail = $email;
+        $order->status = 'ok';
+
+        $order->save();
+    // dd($request);
     // Logic for displaying the interface for cash payment
-    return redirect()->back();
+
 }
 
 
