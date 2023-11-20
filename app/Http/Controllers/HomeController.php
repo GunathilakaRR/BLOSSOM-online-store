@@ -91,32 +91,6 @@ class HomeController extends Controller
 
     public function processPayment(Request $request)
     {
-        // $user=auth()->user();
-
-        // $name = $user->name;
-        // $phone = $user->phone;
-        // $address = $user->address;
-        // $email= $user->email;
-
-        // if (!is_null($request->product_title)) {
-        //     foreach($request->product_title as $key=>$productname){
-        //         $order = new order;
-
-        //         $order->product = $request->product_title[$key];
-        //         $order->price = $request->price[$key];
-        //         $order->quantity = $request->quantity[$key];
-        //         $order->CusName = $name;
-        //         $order->CusAddress= $address;
-        //         $order->Cusphone = $phone;
-        //         $order->CusEmail = $email;
-        //         $order->status = 'card';
-
-        //         $order->save();
-        //     }
-        // }
-
-
-
         $paymentMethod = $request->input('payment_method');
 
         if ($paymentMethod === 'card') {
@@ -208,14 +182,25 @@ class HomeController extends Controller
 
                 }
                 return view('user.paymentSuccess');
+                // return redirect('paymentSuccess');
             }   else {
 
-            return response()->json(['error' => 'Invalid payment method'], 400);
-        }
+                        return response()->json(['error' => 'Invalid payment method'], 400);
+                }
 
+        // return view('user.paymentSuccess');
     }
 
 
+
+
+
+
+
+
+    public function paymentSuccess(){
+        return'success';
+    }
 
 
 

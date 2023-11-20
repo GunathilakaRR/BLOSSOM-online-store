@@ -225,18 +225,24 @@
             <p>
                 Phone no : {{ $user->phone }}
             </p>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="payment_method" value="card">
-                <label class="form-check-label">
-                    card payment
-                </label>
-            </div>
-            <div class="form-check">
-                <input class="form-check-input" type="radio" name="payment_method" value="cash">
-                <label class="form-check-label">
-                    cash on delivery
-                </label>
-            </div>
+            <p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" value="card">
+                    <label class="form-check-label">
+                        card payment
+                    </label>
+                </div>
+            </p>
+
+            <p>
+                <div class="form-check">
+                    <input class="form-check-input" type="radio" name="payment_method" value="cash">
+                    <label class="form-check-label">
+                        cash on delivery
+                    </label>
+                </div>
+            </p>
+
             <p>
                 Order Summary :
             </p>

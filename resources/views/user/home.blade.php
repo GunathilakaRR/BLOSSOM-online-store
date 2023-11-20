@@ -36,9 +36,9 @@
     <section id="header">
         <div class="container-fluid">
 
+            @include('user.navbar')
 
-
-            <nav class="navbar navbar-expand-lg  ">
+            {{-- <nav class="navbar navbar-expand-lg  ">
                 <a class="navbar-brand" href="#">BLOSSOM</a>
                 <button class="navbar-toggler" type="button" data-toggle="collapse"
                     data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
@@ -90,7 +90,7 @@
 
                     </ul>
                 </div>
-            </nav>
+            </nav> --}}
 
 
 
