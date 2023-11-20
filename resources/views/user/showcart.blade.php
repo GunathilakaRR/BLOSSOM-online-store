@@ -21,6 +21,10 @@
 <link rel="stylesheet" href="./style.css">
 
 <style>
+    body {
+        background-color: #fc8f9f;
+    }
+
     .col-gap {
         padding-right: 20px;
     }
@@ -36,6 +40,20 @@
         border: 1px solid black;
         padding: 20px;
         border-radius: 10px;
+    }
+
+    .payment-btn {
+        background-color: black;
+        color: white;
+        padding: 10px 20px;
+        border-radius: 25px;
+    }
+
+    .trash {
+        background-color: black;
+        padding: 10px;
+        color: white;
+        border-radius: 8px;
     }
 </style>
 
@@ -99,6 +117,7 @@
     <div class="row">
         <div class="col-lg-7 col-md-12">
 
+
             <form class="cart-col1" action="{{ route('process.payment') }}" method="POST">
                 @csrf
                 <table>
@@ -109,17 +128,19 @@
                             <th class="col-gap">Quantity</th>
                             <th class="col-gap">Price</th>
                             <th class="col-gap">Total</th>
-                            <th class="col-gap">Action</th>
+                            <th class="col-gap">Remove</th>
                         </tr>
                     </thead>
                     <tbody>
                         @foreach ($cart as $item)
                             <tr>
-                                <td  class="col-gap"> <input type="text" name="product_title[]" value="{{ $item->product_title }}" hidden="">
+                                <td class="col-gap"> <input type="text" name="product_title[]"
+                                        value="{{ $item->product_title }}" hidden="">
                                     {{ $item->product_title }}
                                 </td>
 
-                                <td class="col-gap"><input type="text" name="product_category[]" value="{{ $item->product_category }}" hidden="">
+                                <td class="col-gap"><input type="text" name="product_category[]"
+                                        value="{{ $item->product_category }}" hidden="">
                                     {{ $item->product_category }}
                                 </td>
 
@@ -129,7 +150,8 @@
                                         oninput="calculateTotal()">
                                 </td>
 
-                                <td class="price col-gap"><input type="text" name="price[]" value="{{ $item->price }}" hidden="">
+                                <td class="price col-gap"><input type="text" name="price[]"
+                                        value="{{ $item->price }}" hidden="">
                                     {{ $item->price }}
                                 </td>
 
@@ -137,9 +159,8 @@
                                     {{ $item->price }}
                                 </td>
 
-                                <td class="col-gap"><a class="btn btn-danger"
-                                        href="{{ url('deleteAddToCart', $item->id) }}"><i
-                                            class="fa-solid fa-trash"></i></a>
+                                <td class="col-gap"><a href="{{ url('deleteAddToCart', $item->id) }}">
+                                        <i class=" trash fa-solid fa-trash"></i></a>
                                 </td>
                             </tr>
                         @endforeach
@@ -204,25 +225,41 @@
             <p>
                 Phone no : {{ $user->phone }}
             </p>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment_method" value="card">
+                <label class="form-check-label">
+                    card payment
+                </label>
+            </div>
+            <div class="form-check">
+                <input class="form-check-input" type="radio" name="payment_method" value="cash">
+                <label class="form-check-label">
+                    cash on delivery
+                </label>
+            </div>
             <p>
                 Order Summary :
             </p>
 
 
-            <button type="submit" name="payment_method" value="card">Pay with card</button>
+            <button class="payment-btn" type="submit">Confirm Order</button>
+            {{-- <button class="payment-btn" type="submit" name="payment_method" value="card">Pay with card</button> --}}
             {{-- <button type="submit">Pay with card</button> --}}
+
+
+
 
         </div>
 
         </form>
 
-        <form action="{{ route('cash-payment-interface') }}" method="POST">
-            @csrf
-            <button type="submit" name="payment_method" value="cash">Pay with cash</button>
-        </form>
 
     </div>
+    {{-- <form action="{{ route('cash-payment-interface') }}" method="POST">
+            @csrf
+                <button class="payment-btn" type="submit" name="payment_method" value="cash">Pay with cash</button>
 
+            </form> --}}
 </div>
 
 
@@ -232,6 +269,8 @@
     integrity="sha384-C6RzsynM9kWDrMNeT87bh95OGNyZPhcTNXj1NW7RuBCsyN/o0jlpcV8Qyq46cDfL" crossorigin="anonymous">
 </script>
 
-{{-- <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"
-    integrity="sha384-w76AqPfDkMBDXo30jS1Sgez6pr3x5MlQ1ZAGC+nuZB+EYdgRZgiwxhTBTkF7CXvN" crossorigin="anonymous">
-</script> --}}
+
+
+
+
+

@@ -47,7 +47,7 @@ class HomeController extends Controller
 
         $data = product::where('title','Like', '%'.$search.'%')->get();
         return view('user.home', compact('data'));
-}
+    }
 
 
 
@@ -69,183 +69,163 @@ class HomeController extends Controller
         }else{
             return redirect('login');
         }
-}
-
-
-
-public function showcart(){
-
-    $user = auth()->user();
-    $cart = cart::where('phone', $user->phone)->get();
-    return view('user.showcart', compact('cart', 'user'));
-}
-
-
-public function deleteAddToCart($id){
-    $data = cart::find($id);
-    $data->delete();
-
-    return redirect()->back();
-}
-
-
-
-
-public function processPayment(Request $request)
-{
-    $user=auth()->user();
-
-    $name = $user->name;
-    $phone = $user->phone;
-    $address = $user->address;
-    $email= $user->email;
-
-    if (!is_null($request->product_title)) {
-    foreach($request->product_title as $key=>$productname){
-        $order = new order;
-
-        $order->product = $request->product_title[$key];
-        $order->price = $request->price[$key];
-        $order->quantity = $request->quantity[$key];
-        $order->CusName = $name;
-        $order->CusAddress= $address;
-        $order->Cusphone = $phone;
-        $order->CusEmail = $email;
-        $order->status = 'ok';
-
-        $order->save();
-    }}
-    // dd($request);
-
-    // Handle payment processing for both cash and card
-    $paymentMethod = $request->input('payment_method');
-
-    if ($paymentMethod === 'card') {
-        // Redirect to Stripe payment gateway with necessary information
-        // Implement your Stripe logic here
-
-        $total_price = $request->grandTotal;
-
-    $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-    $products = Cart::all();
-
-    $lineItems = [];
-
-    foreach($products as $product){
-
-        $lineItems [] = [
-            [
-                'price_data' => [
-                  'currency' => 'usd',
-                  'product_data' => [
-
-                    'name' => $product->product_title,
-                  ],
-                  'unit_amount' => $total_price*100,
-                ],
-                'quantity' => 1,
-            ]
-        ];
     }
 
-    $checkout_session = $stripe->checkout->sessions->create([
-        'line_items' => $lineItems,
-        'mode' => 'payment',
-        'success_url' => 'http://localhost:4242/success',
-        'cancel_url' => 'http://localhost:4242/cancel',
-    ]);
-
-    return redirect($checkout_session->url);
-}
 
 
-        // return redirect()->route('stripe.checkout');
+    public function showcart(){
 
-     elseif ($paymentMethod === 'cash') {
-        // Redirect to another interface for cash payment
-        return redirect()->route('cash-payment-interface');
+        $user = auth()->user();
+        $cart = cart::where('phone', $user->phone)->get();
+        return view('user.showcart', compact('cart', 'user'));
     }
+
+
+    public function deleteAddToCart($id){
+        $data = cart::find($id);
+        $data->delete();
+
+        return redirect()->back();
+    }
+
+
+    public function processPayment(Request $request)
+    {
+        // $user=auth()->user();
+
+        // $name = $user->name;
+        // $phone = $user->phone;
+        // $address = $user->address;
+        // $email= $user->email;
+
+        // if (!is_null($request->product_title)) {
+        //     foreach($request->product_title as $key=>$productname){
+        //         $order = new order;
+
+        //         $order->product = $request->product_title[$key];
+        //         $order->price = $request->price[$key];
+        //         $order->quantity = $request->quantity[$key];
+        //         $order->CusName = $name;
+        //         $order->CusAddress= $address;
+        //         $order->Cusphone = $phone;
+        //         $order->CusEmail = $email;
+        //         $order->status = 'card';
+
+        //         $order->save();
+        //     }
+        // }
+
+
+
+        $paymentMethod = $request->input('payment_method');
+
+        if ($paymentMethod === 'card') {
+            $user=auth()->user();
+
+                $name = $user->name;
+                $phone = $user->phone;
+                $address = $user->address;
+                $email= $user->email;
+
+                    if (!is_null($request->product_title)) {
+                        foreach($request->product_title as $key=>$productname){
+                            $order = new order;
+
+                            $order->product = $request->product_title[$key];
+                            $order->price = $request->price[$key];
+                            $order->quantity = $request->quantity[$key];
+                            $order->CusName = $name;
+                            $order->CusAddress= $address;
+                            $order->Cusphone = $phone;
+                            $order->CusEmail = $email;
+                            $order->status = 'card';
+
+                            $order->save();
+                        }
+                    }
+
+
+            $total_price = $request->grandTotal;
+
+            $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
+            $products = Cart::all();
+
+            $lineItems = [];
+
+            foreach($products as $product){
+
+                $lineItems [] = [
+                    [
+                        'price_data' => [
+                        'currency' => 'usd',
+                        'product_data' => [
+
+                            'name' => $product->product_title,
+                        ],
+                        'unit_amount' => $total_price*100,
+                        ],
+                        'quantity' => 1,
+                    ]
+                ];
+            }
+
+            $checkout_session = $stripe->checkout->sessions->create([
+                'line_items' => $lineItems,
+                'mode' => 'payment',
+                'success_url' => 'http://localhost:4242/success',
+                'cancel_url' => 'http://localhost:4242/cancel',
+            ]);
+
+            return redirect($checkout_session->url);
+            }elseif ($paymentMethod === 'cash')
+            {
+
+                $user = auth()->user();
+
+                $name = $user->name;
+                $phone = $user->phone;
+                $address = $user->address;
+                $email = $user->email;
+
+                if (!is_null($request->product_title)) {
+
+
+                    foreach ($request->product_title as $key => $productname) {
+                        $order = new Order;
+
+                        $order->product = $request->product_title[$key];
+                        $order->price = $request->price[$key];
+                        $order->quantity = $request->quantity[$key];
+                        $order->CusName = $name;
+                        $order->CusAddress = $address;
+                        $order->Cusphone = $phone;
+                        $order->CusEmail = $email;
+                        $order->status = 'cash_payment';
+
+                        $order->save();
+
+                    }
+
+                }
+                return view('user.paymentSuccess');
+            }   else {
+
+            return response()->json(['error' => 'Invalid payment method'], 400);
+        }
+
+    }
+
+
+
+
+
 }
 
 
 
 
-public function showCashPaymentInterface(Request $request)
-{
-    $user=auth()->user();
-
-    $name = $user->name;
-    $phone = $user->phone;
-    $address = $user->address;
-    $email= $user->email;
-
-    if (!is_null($request->product_title)) {
-    foreach($request->product_title as $key=>$productname){
-        $order = new order;
-
-        $order->product = $request->product_title[$key];
-        $order->price = $request->price[$key];
-        $order->quantity = $request->quantity[$key];
-        $order->CusName = $name;
-        $order->CusAddress= $address;
-        $order->Cusphone = $phone;
-        $order->CusEmail = $email;
-        $order->status = 'ok';
-
-        $order->save();
-    // dd($request);
-    // Logic for displaying the interface for cash payment
-
-}
 
 
-}
 
-
-// public function payment(Request $request){
-
-//     $total_price = $request->grandTotal;
-//     // dd($request->grandTotal);
-
-//     $stripe = new \Stripe\StripeClient(env('STRIPE_SECRET_KEY'));
-//     $products = Cart::all();
-
-//     $lineItems = [];
-
-//     foreach($products as $product){
-
-//         $lineItems [] = [
-//             [
-//                 'price_data' => [
-//                   'currency' => 'usd',
-//                   'product_data' => [
-
-//                     'name' => $product->product_title,
-//                   ],
-//                   'unit_amount' => $total_price*100,
-//                 ],
-//                 'quantity' => 1,
-//             ]
-//         ];
-//     }
-
-//     $checkout_session = $stripe->checkout->sessions->create([
-//         'line_items' => $lineItems,
-//         'mode' => 'payment',
-//         'success_url' => 'http://localhost:4242/success',
-//         'cancel_url' => 'http://localhost:4242/cancel',
-//     ]);
-
-//     return redirect($checkout_session->url);
-// }
-
-// public function success(){
-//     return 'success';
-// }
-
-// public function cancel(){
-//     return 'canceled';
-// }
-// }
 
 

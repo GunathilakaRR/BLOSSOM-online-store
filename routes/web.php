@@ -69,4 +69,4 @@ Route::get('/search', [HomeController::class, 'search']);
 // Route::post('cash-payment', [HomeController::class, 'payment'])->name('cash-payment');
 
 Route::post('/process-payment', [HomeController::class, 'processPayment'])->name('process.payment');
-Route::post('/cash-payment-interface', [HomeController::class, 'showCashPaymentInterface'])->name('cash-payment-interface');
+// Route::post('/cash-payment-interface', [HomeController::class, 'updateOrdersForCashPayment'])->name('cash-payment-interface');
