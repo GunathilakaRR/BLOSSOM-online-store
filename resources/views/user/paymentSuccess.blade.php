@@ -6,7 +6,7 @@
 
 <style>
 body{
-    background-color: pink;
+    background-color: #fc8f9f;
     display: flex;
     justify-content: center;
     align-items: center;

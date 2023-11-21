@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Models\Product;
 use App\Models\Category;
+use App\Models\Order;
 
 class AdminController extends Controller
 {
@@ -83,7 +84,7 @@ class AdminController extends Controller
 
 
     public function modifyproduct(Request $request, $id){
-        $data = product::find($id); 
+        $data = product::find($id);
 
         $image = $request->file;
 
@@ -103,5 +104,26 @@ class AdminController extends Controller
         $data->save();
 
         return redirect()->back()->with('message', "Product updated successfully");
+    }
+
+
+
+
+    public function showorders(){
+
+        $order = order::all();
+
+        return view('admin.showorder', compact('order'));
+    }
+
+
+
+    public function updateorder($id){
+
+        $order = order::find($id);
+        $order->deliveryStat = 'Delivered';
+        $order->save();
+
+        return redirect()->back();
     }
 }

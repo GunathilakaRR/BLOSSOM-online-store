@@ -17,7 +17,7 @@
 
 
 
-    <!-- partial -->
+
 
     {{-- sidebar panel --}}
     @include('admin.sidebar')
@@ -27,10 +27,10 @@
 
 
 
-    <!-- partial -->
+
 
     @include('admin.body')
-    <!-- partial -->
+   
 
     @include('admin.script')
 

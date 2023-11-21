@@ -1,9 +1,6 @@
 <style>
-    .catType {
-        padding-left: 20px;
-    }
-</style>
 
+</style>
 
 {{-- search bar --}}
 
@@ -17,6 +14,8 @@
   </div>
 </form> --}}
 
+
+
 @if (session()->has('message'))
     <div class="alert alert-success">
         <button type="button" class="close" data-dismiss="alert">x</button>
@@ -24,27 +23,41 @@
     </div>
 @endif
 
+
 <section id="features">
-    <div class="row ">
-
-        @foreach ($data as $product)
-            <div class="feature-box col-lg-4">
-
-                <img width="300" height="370" src="/productimage/{{ $product->image }}" alt="" width="300px">
-                <p>{{ $product->title }}</p>
-                <p>Rs.{{ $product->price }}/= <span class="catType"> {{ $product->category->category_name }}</span></p>
-
-                <form action="{{ url('addToCart', $product->id) }}" method="post">
-                    @csrf
-                    <input class="btn btn-primary" type="submit" value="Add To Cart">
-                </form>
-
-
-            </div>
-        @endforeach
+    <div class="feature-heading">
+        NEW ARRIVALS
     </div>
+    <div class="container feature-box">
+        <div class="row align-items-center">
+            @foreach ($data as $product)
+                <div class="col-12 col-md-6 col-lg-4 text-center d-flex justify-content-center align-items-center ">
 
+                    <div class="card-f">
+                        <img class="card-img" src="/productimage/{{ $product->image }}" alt="">
+                        <div class="card-body-f">
+                            <p class="title">{{ $product->title }}</p>
+
+                            <p><span class="category"> {{ $product->category->category_name }}</p>
+
+                            <p class="price">Rs.{{ $product->price }}/= </p>
+
+                            <form action="{{ url('addToCart', $product->id) }}" method="post">
+                                @csrf
+                                <input class="btn " type="submit" value="Add To Cart">
+                            </form>
+
+                        </div>
+                    </div>
+                </div>
+            @endforeach
+        </div>
+    </div>
 </section>
+
+
+
+
 
 @if (method_exists($data, 'link'))
     <div class="d-flex justify-content-center">
