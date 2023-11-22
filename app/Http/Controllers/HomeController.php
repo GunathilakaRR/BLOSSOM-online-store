@@ -114,6 +114,7 @@ class HomeController extends Controller
                             $order->Cusphone = $phone;
                             $order->CusEmail = $email;
                             $order->status = 'card';
+                            $order->deliveryStat = 'not confirmed';
 
                             $order->save();
                         }
@@ -147,9 +148,10 @@ class HomeController extends Controller
             $checkout_session = $stripe->checkout->sessions->create([
                 'line_items' => $lineItems,
                 'mode' => 'payment',
-                'success_url' => 'http://localhost:4242/success',
-                'cancel_url' => 'http://localhost:4242/cancel',
+                'success_url' => route('paymentSuccess', [], true),
+                'cancel_url' => route('paymentCancel', [], true),
             ]);
+
 
             return redirect($checkout_session->url);
             }elseif ($paymentMethod === 'cash')
@@ -175,7 +177,8 @@ class HomeController extends Controller
                         $order->CusAddress = $address;
                         $order->Cusphone = $phone;
                         $order->CusEmail = $email;
-                        $order->status = 'cash_payment';
+                        $order->status = 'cash';
+                        $order->deliveryStat = 'not confirmed';
 
                         $order->save();
 
@@ -200,7 +203,12 @@ class HomeController extends Controller
 
 
     public function paymentSuccess(){
-        return'success';
+        return view('user.paymentSuccess');
+    }
+
+
+    public function paymentCancel(){
+        return'fail';
     }
 
 

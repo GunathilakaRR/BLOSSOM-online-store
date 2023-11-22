@@ -67,4 +67,4 @@ Route::get('/updateorder/{id}/{CusEmail}', [AdminController::class, 'updateorder
 
 Route::post('/process-payment', [HomeController::class, 'processPayment'])->name('process.payment');
 Route::get('/paymentSuccess', [HomeController::class, 'paymentSuccess'])->name('paymentSuccess');
-
+Route::get('/paymentCancel', [HomeController::class, 'paymentCancel'])->name('paymentCancel');
