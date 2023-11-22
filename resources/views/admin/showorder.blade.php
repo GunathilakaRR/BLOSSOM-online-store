@@ -75,14 +75,14 @@
                               <td> {{ $item->status }} </td>
                               <td>
                                 @if ($item->deliveryStat == null)
-                                    <a class="btn btn-success" href="{{ url('updateorder', $item->id) }}">confirm</a></td>
+                                    <a class="btn btn-success" href="{{ url('updateorder', ['id' => $item->id, 'CusEmail' => $item->CusEmail]) }}">confirm</a></td>
                                 @else
                                     <a class="btn btn-danger" href="{{ url('updateorder', $item->id) }}">cancel</a></td>
                                 @endif
                             </tr>
                             @endforeach
 
-                          
+
 
                           </tbody>
                         </table>

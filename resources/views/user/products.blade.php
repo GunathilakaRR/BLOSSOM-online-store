@@ -14,14 +14,14 @@
   </div>
 </form> --}}
 
-
-
 @if (session()->has('message'))
-    <div class="alert alert-success">
-        <button type="button" class="close" data-dismiss="alert">x</button>
+    <div class="alert alert-success alert-dismissible fade show">
+
+        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
         {{ session()->get('message') }}
     </div>
 @endif
+
 
 
 <section id="features">

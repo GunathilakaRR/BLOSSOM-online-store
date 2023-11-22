@@ -81,12 +81,15 @@
             <h1 class="title">Update Product</h1>
 
             @if (session()->has('message'))
-                <div class="alert alert-success">
 
-                    <button type="button" class="close" data-dismiss='alert'>x</button>
-                    {{ session()->get('message') }}
 
-                </div>
+                    <div class="alert alert-secondary alert-dismissible fade show" >
+
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {{ session()->get('message') }}
+                      </div>
+
+
             @endif
 
             <form action="{{ url('modifyproduct',  $data->id) }}" method="POST" enctype="multipart/form-data">

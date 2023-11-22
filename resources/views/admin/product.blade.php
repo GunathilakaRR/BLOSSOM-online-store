@@ -76,66 +76,11 @@
             <h1 class="title">Add Product</h1>
 
             @if (session()->has('message'))
-                <div class="alert alert-success">
-
-                    <button type="button" class="close" data-dismiss='alert'>x</button>
-                    {{ session()->get('message') }}
-
-                </div>
+                    <div class="alert alert-secondary alert-dismissible fade show" >
+                        <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+                        {{ session()->get('message') }}
+                      </div>
             @endif
-
-
-
-
-
-            {{-- <form action="{{ url('uploadproduct') }}" method="POST" enctype="multipart/form-data">
-                @csrf
-
-                <div style="padding: 20px">
-                    <label>Category</label>
-                    <select name="categoryId" class="form-control">
-                        @foreach ($categories as $category)
-                            <option value="{{ $category->id }}">{{ $category->category_name }}</option>
-                        @endforeach
-                    </select>
-                </div>
-
-                <div style="padding: 20px">
-                    <label>Product Title</label>
-                    <input type="text" name="title" placeholder="Product title">
-                </div>
-
-                <div style="padding: 20px">
-                    <label>Product Price</label>
-                    <input type="number" name="price" placeholder="Product price">
-                </div>
-
-                <div style="padding: 20px">
-                    <label>Product Description</label>
-                    <input type="text" name="desc" placeholder="Product description">
-                </div>
-
-                <div style="padding: 20px">
-                    <label>Product Quantity</label>
-                    <input type="text" name="quantity" placeholder="Product quantity">
-                </div>
-
-                <div style="padding: 20px">
-                    <label>Product Iamge</label>
-                    <input type="file" name="file">
-                </div>
-
-                <div style="padding: 20px">
-                    <input type="submit">
-                </div>
-
-
-            </form> --}}
-
-
-
-
-
 
             <form action="{{ url('uploadproduct') }}" method="POST" enctype="multipart/form-data">
                 @csrf

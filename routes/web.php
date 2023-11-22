@@ -61,7 +61,7 @@ Route::get('/search', [HomeController::class, 'search']);
 Route::get('/showorders', [AdminController::class, 'showorders']);
 
 
-Route::get('/updateorder/{id}', [AdminController::class, 'updateorder']);
+Route::get('/updateorder/{id}/{CusEmail}', [AdminController::class, 'updateorder']);
 
 
 
